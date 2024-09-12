@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :posts, only: [:create, :index, :show]
+  resources :posts, only: [:index, :show]
+
+  namespace :admin do
+    resources :posts, only: [:create]
+  end
 
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
