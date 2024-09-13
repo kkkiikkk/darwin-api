@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :posts, only: [:index, :show]
+  resources :posts, only: [:index, :show] do
+    resource :likes, only: [:create]
+  end
 
   namespace :admin do
     resources :posts, only: [:create]

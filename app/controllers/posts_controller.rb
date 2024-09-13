@@ -11,13 +11,15 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.left_joins(:likes)
+    .select('posts.*, COUNT(likes.id) AS likes_count')
+    .group('posts.id')
 
     render json: { data: @posts }, status: :ok
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:id]).include(:likes)
 
     render json: { data: @post }, status: :ok
   rescue ActiveRecord::RecordNotFound
